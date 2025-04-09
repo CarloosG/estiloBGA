@@ -1,92 +1,93 @@
 package com.example.backestilobga.modelo;
 
-
+import com.example.backestilobga.servicio.CitaServicio;
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = Cita.TABLE_NAME)
 public class Cita {
 
-    public static final String TABLE_NAME = "cita";
+    public static final String TABLE_NAME = "Cita";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCita;
-    private String nombre_cliente;
-    private String nombre_estilista;
-    private String servicio;
-    private Date fecha;
-    private int precio_servicio;
-    private boolean promocion;
+    private Long id;
 
-    public Cita() {
+    //Relacion Muchos a Uno con Cliente
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    //Relacion Muchos a Uno con Estilista
+    @ManyToOne
+    @JoinColumn(name = "estilista_id")
+    private Estilista estilista;
+
+    @Column(name = "fecha_cita")
+    private LocalDateTime fechaCita;
+
+    //Relacion Muchos a Muchos con Servicio a través de Cita_Servicio
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL)
+    private Set<CitaServicioTable> citaServicios = new HashSet<>();
+
+    //Relación Muchos a Muchos con Horario_Estilista a través de Horario_Estilista_Cita
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL)
+    private Set<HorarioEstilistaCita> horarioEstilistaCitas = new HashSet<>();
+
+    // Constuctor vacio
+    public Cita() {}
+
+    // Constructor con todos los atributos (excepto colecciones y el ID generado)
+    public Cita(Cliente cliente, Estilista estilista, LocalDateTime fechaCita) {
+        this.cliente = cliente;
+        this.estilista = estilista;
+        this.fechaCita = fechaCita;
     }
 
-    public Cita(int idCita, String nombre_cliente, String nombre_estilista, String servicio, Date fecha, int precio_servicio, boolean promocion) {
-        this.idCita = idCita;
-        this.nombre_cliente = nombre_cliente;
-        this.nombre_estilista = nombre_estilista;
-        this.servicio = servicio;
-        this.fecha = fecha;
-        this.precio_servicio = precio_servicio;
-        this.promocion = promocion;
+    //Getters y Setters
+
+
+    public Long getId() {
+        return id;
     }
 
-    public int getIdCita() {
-        return idCita;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setIdCita(int idCita) {
-        this.idCita = idCita;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public String getNombre_cliente() {
-        return nombre_cliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public void setNombre_cliente(String nombre_cliente) {
-        this.nombre_cliente = nombre_cliente;
+    public LocalDateTime getFechaCita() {
+        return fechaCita;
     }
 
-    public String getNombre_estilista() {
-        return nombre_estilista;
+    public void setFechaCita(LocalDateTime fechaCita) {
+        this.fechaCita = fechaCita;
     }
 
-    public void setNombre_estilista(String nombre_estilista) {
-        this.nombre_estilista = nombre_estilista;
+    public Set<CitaServicio> getCitaServicios() {
+        return citaServicios;
     }
 
-    public String getServicio() {
-        return servicio;
+    public void setCitaServicios(Set<CitaServicio> citaServicios) {
+        this.citaServicios = citaServicios;
     }
 
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
+    public Set<HorarioEstilistaCita> getHorarioEstilistaCitas() {
+        return horarioEstilistaCitas;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getPrecio_servicio() {
-        return precio_servicio;
-    }
-
-    public void setPrecio_servicio(int precio_servicio) {
-        this.precio_servicio = precio_servicio;
-    }
-
-    public boolean isPromocion() {
-        return promocion;
-    }
-
-    public void setPromocion(boolean promocion) {
-        this.promocion = promocion;
+    public void setHorarioEstilistaCitas(Set<HorarioEstilistaCita> horarioEstilistaCitas) {
+        this.horarioEstilistaCitas = horarioEstilistaCitas;
     }
 }
