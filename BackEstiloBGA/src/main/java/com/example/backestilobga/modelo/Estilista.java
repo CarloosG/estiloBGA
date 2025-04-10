@@ -17,7 +17,7 @@ public class Estilista {
     @Column(name = "estilista_id")
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL) // O CascadeType.PERSIST
     @JoinColumn(name = "usuario_id", unique = true)
     private Usuario usuario;
 
