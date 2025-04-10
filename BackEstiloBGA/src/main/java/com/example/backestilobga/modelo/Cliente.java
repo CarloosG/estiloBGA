@@ -18,12 +18,12 @@ public class Cliente {
     private Long id;
 
     //Relacion uno a uno con usuario
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL) // O CascadeType.PERSIST
     @JoinColumn(name = "usuario_id", unique = true)
     private Usuario usuario;
 
     // Relacion uno a muchos con Cita
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Cita> citas = new HashSet<>(); //aca hay un problema, revisar que es
 

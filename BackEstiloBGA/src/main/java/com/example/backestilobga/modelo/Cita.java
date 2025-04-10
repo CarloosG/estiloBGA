@@ -32,7 +32,7 @@ public class Cita {
     private LocalDateTime fechaCita;
 
     //Relacion Uno a Muchos con Servicio a través de Cita_Servicio
-    @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<CitaServicioTable> citaServicios = new HashSet<>();
 
@@ -42,15 +42,25 @@ public class Cita {
     @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<HorarioEstilistaCita> horarioEstilistaCitas = new HashSet<>();
 
+    // Relación para Cita_reporte
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.REMOVE)
+    private Set<Cita_reporte> citaReportes = new HashSet<>();
+
+    @OneToOne(mappedBy = "cita", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private Pago pago;
+
     // Constuctor vacio
     public Cita() {}
 
     // Constructor con todos los atributos (excepto colecciones y el ID generado)
-    public Cita(Cliente cliente, Estilista estilista, LocalDateTime fechaCita) {
+    public Cita(Cliente cliente, Estilista estilista, LocalDateTime fechaCita, Pago pago) {
         this.cliente = cliente;
         this.estilista = estilista;
         this.fechaCita = fechaCita;
+        this.pago = pago;
     }
+
 
     //Getters y Setters
     public Long getId() {
@@ -99,5 +109,21 @@ public class Cita {
 
     public void setHorarioEstilistaCitas(Set<HorarioEstilistaCita> horarioEstilistaCitas) {
         this.horarioEstilistaCitas = horarioEstilistaCitas;
+    }
+
+    public Set<Cita_reporte> getCitaReportes() {
+        return citaReportes;
+    }
+
+    public void setCitaReportes(Set<Cita_reporte> citaReportes) {
+        this.citaReportes = citaReportes;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
     }
 }

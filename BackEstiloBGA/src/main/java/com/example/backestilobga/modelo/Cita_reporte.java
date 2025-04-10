@@ -18,6 +18,4 @@ public class Cita_reporte {
     @MapsId("reporteId")
     @JoinColumn(name = "reporte_id")
     private Reporte reporte;
-
-
 }
