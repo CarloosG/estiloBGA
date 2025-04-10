@@ -6,11 +6,29 @@ import java.util.List;
 
 public interface ICitaServicio {
 
-    public List<Cita> getCitas();
+    // Buscar todas las citas
+    public List<Cita> listarTodasCitas();
 
-    public Cita getCita(Integer id);
+    // Buscar cita por id
+    public Cita getCitaById(Long id);
 
+    // Guardar cita
     public Cita guardarCita(Cita cita);
 
-    public void eliminarCita(Integer id);
+    // Eliminar cita por id
+    public void eliminarCita(Long id);
+
+    /*// Métodos específicos de negocio
+    List<Cita> buscarCitasPorCliente(Long clienteId);
+    List<Cita> buscarCitasPorEstilista(Long estilistaId);
+    List<Cita> buscarCitasPorRangoFechas(LocalDateTime inicio, LocalDateTime fin);
+    List<Cita> buscarCitasClientePorFecha(Long clienteId, LocalDateTime inicio, LocalDateTime fin);
+    List<Cita> buscarCitasEstilistaPorFecha(Long estilistaId, LocalDateTime inicio, LocalDateTime fin);
+
+    // Lógica de negocio
+    boolean verificarDisponibilidad(Long estilistaId, LocalDateTime inicio, LocalDateTime fin);
+    Cita programarCita(Long clienteId, Long estilistaId, LocalDateTime fechaCita, List<Long> serviciosIds);
+    boolean cancelarCita(Long citaId);
+    */
+
 }

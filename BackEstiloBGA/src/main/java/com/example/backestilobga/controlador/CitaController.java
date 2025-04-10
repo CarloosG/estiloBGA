@@ -17,46 +17,51 @@ public class CitaController {
     @Autowired
     private CitaServicio citaServicio;
 
+    //Buscar todas las citas
     @GetMapping("/list")
     public List<Cita> consultarTodo() {
-        return citaServicio.getCitas();
+        return citaServicio.listarTodasCitas();
     }
 
+    // Buscar cita por id
     @GetMapping("/list/{id}")
-    public Cita buscarCitaPorId(@PathVariable Integer id) {
-        return citaServicio.getCita(id);
+    public Cita buscarCitaPorId(@PathVariable Long id) {
+        return citaServicio.getCitaById(id);
     }
 
+    // Agregar una cita
     @PostMapping("/")
     public ResponseEntity<Cita> agregarCita(@RequestBody Cita cita) {
-        Cita obj = citaServicio.guardarCita( cita );
-        return new ResponseEntity<>( obj, HttpStatus.OK);
+        Cita nuevaCita = citaServicio.guardarCita( cita );
+        return new ResponseEntity<>( nuevaCita, HttpStatus.OK);
     }
 
+    // Editar una cita
     @PutMapping("/")
     public ResponseEntity<Cita> editarCita(@RequestBody Cita cita) {
-        Cita obj = citaServicio.getCita(cita.getIdCita());
-        if(obj != null) {
-            obj.setNombre_cliente(cita.getNombre_cliente());
-            obj.setNombre_estilista(cita.getNombre_estilista());
-            obj.setServicio(cita.getServicio());
-            obj.setPrecio_servicio(cita.getPrecio_servicio());
-            obj.setPromocion(cita.isPromocion());
-            citaServicio.guardarCita(obj);
-        } else {
-            return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR);
+        Long id = cita.getId();
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(obj, HttpStatus.OK);
+
+        Cita citaExistente = citaServicio.getCitaById(id);
+        if (citaExistente != null) {
+            Cita citaActualizada = citaServicio.guardarCita(cita);
+            return new ResponseEntity<>(citaActualizada, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
+    // Eliminar una cita
     @DeleteMapping("/{id}")
-    public ResponseEntity<Cita> eliminarCita(@PathVariable Integer id) {
-        Cita obj = citaServicio.getCita(id);
-        if(obj != null) {
+    public ResponseEntity<Cita> eliminarCita(@PathVariable Long id) {
+        Cita citaExistente = citaServicio.getCitaById(id);
+        if (citaExistente != null) {
             citaServicio.eliminarCita(id);
-        }else {
-            return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 }

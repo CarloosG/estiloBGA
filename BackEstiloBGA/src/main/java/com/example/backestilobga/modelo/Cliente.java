@@ -1,5 +1,6 @@
 package com.example.backestilobga.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -23,6 +24,7 @@ public class Cliente {
 
     // Relacion uno a muchos con Cita
     @OneToMany(mappedBy = "cliente")
+    @JsonIgnore
     private Set<Cita> citas = new HashSet<>(); //aca hay un problema, revisar que es
 
     // Constructores

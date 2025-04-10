@@ -20,4 +20,39 @@ public class HorarioEstilistaCita {
     @MapsId("citaId")
     @JoinColumn(name = "cita_id")
     private Cita cita;
+
+    // Constructores
+    public HorarioEstilistaCita() {
+    }
+
+    public HorarioEstilistaCita(HorarioEstilista horarioEstilista, Cita cita) {
+        this.horarioEstilista = horarioEstilista;
+        this.cita = cita;
+        this.id = new HorarioEstilistaCitaId(horarioEstilista.getId(), cita.getId());
+    }
+
+    //Getters y setters
+    public HorarioEstilistaCitaId getId() {
+        return id;
+    }
+
+    public void setId(HorarioEstilistaCitaId id) {
+        this.id = id;
+    }
+
+    public HorarioEstilista getHorarioEstilista() {
+        return horarioEstilista;
+    }
+
+    public void setHorarioEstilista(HorarioEstilista horarioEstilista) {
+        this.horarioEstilista = horarioEstilista;
+    }
+
+    public Cita getCita() {
+        return cita;
+    }
+
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
 }

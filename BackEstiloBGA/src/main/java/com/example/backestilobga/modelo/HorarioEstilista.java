@@ -1,5 +1,6 @@
 package com.example.backestilobga.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -26,8 +27,10 @@ public class HorarioEstilista {
     @Column(name = "intervalo_disponible")
     private String intervaloDisponible;
 
-    @ManyToMany(mappedBy = "horariosEstilista")
-    private Set<Cita> citas = new HashSet<>();
+    // Reemplaza la relación ManyToMany con OneToMany hacia la tabla de unión
+    @OneToMany(mappedBy = "horarioEstilista", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<HorarioEstilistaCita> horarioEstilistaCitas = new HashSet<>();
 
     // Constructores
     public HorarioEstilista() {
@@ -37,10 +40,10 @@ public class HorarioEstilista {
         this.estilista = estilista;
         this.diaSemana = diaSemana;
         this.intervaloDisponible = intervaloDisponible;
-        this.citas = citas;
     }
 
     // Getters y setters
+
     public Long getId() {
         return id;
     }
@@ -73,13 +76,14 @@ public class HorarioEstilista {
         this.intervaloDisponible = intervaloDisponible;
     }
 
-    public Set<Cita> getCitas() {
-        return citas;
+    public Set<HorarioEstilistaCita> getHorarioEstilistaCitas() {
+        return horarioEstilistaCitas;
     }
 
-    public void setCitas(Set<Cita> citas) {
-        this.citas = citas;
+    public void setHorarioEstilistaCitas(Set<HorarioEstilistaCita> horarioEstilistaCitas) {
+        this.horarioEstilistaCitas = horarioEstilistaCitas;
     }
+
 
     // Métodos helper para la relación con Cita (opcional, para facilitar la manipulación)
 
