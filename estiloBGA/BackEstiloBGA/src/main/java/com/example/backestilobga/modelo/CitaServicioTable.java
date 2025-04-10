@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name = CitaServicioTable.TABLE_NAME)
 public class CitaServicioTable {
 
-    public static final String TABLE_NAME = "CitaServicio";
+    public static final String TABLE_NAME = "Cita_Servicio";
 
     //Clave primaria compuesta
     @EmbeddedId

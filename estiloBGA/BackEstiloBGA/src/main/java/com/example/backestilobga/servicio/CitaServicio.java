@@ -15,13 +15,14 @@ public class CitaServicio implements ICitaServicio {
     @Autowired
     private CitaRepositorio citaRepositorio;
 
+
     @Override
-    public List<Cita> getCitas() {
+    public List<Cita> listarTodasCitas() {
         return citaRepositorio.findAll();
     }
 
     @Override
-    public Cita getCita(Integer id) {
+    public Cita getCitaById(Long id) {
         return citaRepositorio.findById(id).orElse(null);
     }
 
@@ -31,7 +32,7 @@ public class CitaServicio implements ICitaServicio {
     }
 
     @Override
-    public void eliminarCita(Integer id) {
+    public void eliminarCita(Long id) {
         citaRepositorio.deleteById(id);
     }
 }

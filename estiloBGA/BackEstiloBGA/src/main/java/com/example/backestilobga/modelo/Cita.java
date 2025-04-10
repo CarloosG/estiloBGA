@@ -1,6 +1,6 @@
 package com.example.backestilobga.modelo;
 
-import com.example.backestilobga.servicio.CitaServicio;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +15,7 @@ public class Cita {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cita_id")
     private Long id;
 
     //Relacion Muchos a Uno con Cliente
@@ -30,27 +31,38 @@ public class Cita {
     @Column(name = "fecha_cita")
     private LocalDateTime fechaCita;
 
-    //Relacion Muchos a Muchos con Servicio a través de Cita_Servicio
-    @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL)
+    //Relacion Uno a Muchos con Servicio a través de Cita_Servicio
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private Set<CitaServicioTable> citaServicios = new HashSet<>();
 
-    //Relación Muchos a Muchos con Horario_Estilista a través de Horario_Estilista_Cita
-    @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL)
+    //Relación Muchos a Muchos con HorarioEstilista
+    // Reemplaza la relación ManyToMany con OneToMany hacia la tabla de unión
+    @JsonIgnore
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<HorarioEstilistaCita> horarioEstilistaCitas = new HashSet<>();
+
+    // Relación para Cita_reporte
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.REMOVE)
+    private Set<Cita_reporte> citaReportes = new HashSet<>();
+
+    @OneToOne(mappedBy = "cita", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private Pago pago;
 
     // Constuctor vacio
     public Cita() {}
 
     // Constructor con todos los atributos (excepto colecciones y el ID generado)
-    public Cita(Cliente cliente, Estilista estilista, LocalDateTime fechaCita) {
+    public Cita(Cliente cliente, Estilista estilista, LocalDateTime fechaCita, Pago pago) {
         this.cliente = cliente;
         this.estilista = estilista;
         this.fechaCita = fechaCita;
+        this.pago = pago;
     }
 
+
     //Getters y Setters
-
-
     public Long getId() {
         return id;
     }
@@ -67,6 +79,14 @@ public class Cita {
         this.cliente = cliente;
     }
 
+    public Estilista getEstilista() {
+        return estilista;
+    }
+
+    public void setEstilista(Estilista estilista) {
+        this.estilista = estilista;
+    }
+
     public LocalDateTime getFechaCita() {
         return fechaCita;
     }
@@ -75,11 +95,11 @@ public class Cita {
         this.fechaCita = fechaCita;
     }
 
-    public Set<CitaServicio> getCitaServicios() {
+    public Set<CitaServicioTable> getCitaServicios() {
         return citaServicios;
     }
 
-    public void setCitaServicios(Set<CitaServicio> citaServicios) {
+    public void setCitaServicios(Set<CitaServicioTable> citaServicios) {
         this.citaServicios = citaServicios;
     }
 
@@ -89,5 +109,21 @@ public class Cita {
 
     public void setHorarioEstilistaCitas(Set<HorarioEstilistaCita> horarioEstilistaCitas) {
         this.horarioEstilistaCitas = horarioEstilistaCitas;
+    }
+
+    public Set<Cita_reporte> getCitaReportes() {
+        return citaReportes;
+    }
+
+    public void setCitaReportes(Set<Cita_reporte> citaReportes) {
+        this.citaReportes = citaReportes;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.backestilobga.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -27,9 +28,11 @@ public class Estilista {
     private String especializacion;
 
     @OneToMany(mappedBy = "estilista")
+    @JsonIgnore
     private Set<Cita> citas = new HashSet<>();
 
     @OneToMany(mappedBy = "estilista")
+    @JsonIgnore
     private Set<HorarioEstilista> horarios = new HashSet<>();
 
     // Constructores

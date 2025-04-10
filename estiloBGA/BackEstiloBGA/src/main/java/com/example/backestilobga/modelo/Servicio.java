@@ -1,5 +1,6 @@
 package com.example.backestilobga.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,8 +23,9 @@ public class Servicio {
     @Column(name = "condiciones_previas")
     private String condicionesPrevias;
 
-    //Relacion Muchos a muchos con cita a traves de Cita_Servicio
+    //Relacion uno a muchos con Cita_Servicio table
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<CitaServicioTable> citaServicioTables = new HashSet<>();
 
     // Constructores
