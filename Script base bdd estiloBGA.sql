@@ -14,7 +14,7 @@
 
 -- Volcando estructura de base de datos para bd_clientes
 CREATE DATABASE IF NOT EXISTS `bd_estilobga` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `bd_estiloBGA`;
+USE `bd_estilobga`;
 
 CREATE TABLE Usuario (
     usuario_id INT PRIMARY KEY AUTO_INCREMENT,

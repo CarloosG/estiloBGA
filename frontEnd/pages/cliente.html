@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Panel Cliente</title>
+    <script src="../auth.js"></script>
+    <script src="../cliente.js" defer></script>
+</head>
+
+<body onload="validarToken('ROLE_CLIENTE')">
+    <h1>Bienvenido Cliente 👩‍💇</h1>
+
+    <div id="perfil"></div>
+
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+    <hr>
+
+    <h2>Mis Citas</h2>
+    <div id="listaCitas">Cargando citas...</div>
+
+    <hr>
+
+    <h2>Agendar Nueva Cita</h2>
+    <form id="formNuevaCita">
+        <label>Fecha y Hora:
+            <input type="datetime-local" name="fecha" required />
+        </label>
+        <br>
+        <label>Estilista:
+            <select name="estilista" id="selectEstilista" required></select>
+        </label>
+        <br>
+        <label>Servicio:
+            <select name="servicio" id="selectServicio" required></select>
+        </label>
+        <br>
+        <button type="submit">Agendar</button>
+    </form>
+</body>
+
+</html>

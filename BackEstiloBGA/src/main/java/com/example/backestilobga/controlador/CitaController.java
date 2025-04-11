@@ -1,10 +1,17 @@
 package com.example.backestilobga.controlador;
 
 import com.example.backestilobga.modelo.Cita;
+import com.example.backestilobga.modelo.Cliente;
+import com.example.backestilobga.modelo.Usuario;
+import com.example.backestilobga.repositorio.CitaRepositorio;
+import com.example.backestilobga.repositorio.ClienteRepositorio;
+import com.example.backestilobga.repositorio.UsuarioRepository;
 import com.example.backestilobga.servicio.CitaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +23,24 @@ public class CitaController {
 
     @Autowired
     private CitaServicio citaServicio;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ClienteRepositorio clienteRepository;
+
+    @Autowired
+    private CitaRepositorio citaRepositorio;
+
+    @GetMapping("/cliente")
+    public ResponseEntity<List<Cita>> getCitasDelCliente(@AuthenticationPrincipal UserDetails userDetails) {
+        String correo = userDetails.getUsername();
+        Usuario usuario = usuarioRepository.findByCorreoElectronico(correo).orElseThrow();
+        Cliente cliente = clienteRepository.findByUsuario(usuario).orElseThrow();
+        List<Cita> citas = citaRepositorio.findByCliente(cliente).orElseThrow();
+        return ResponseEntity.ok(citas);
+    }
 
     //Buscar todas las citas
     @GetMapping("/list")
