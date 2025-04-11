@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Citas</title>
+  <link rel="stylesheet" href="citacss.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Gestión de Citas</h1>
+    </header>
+    
+    <main>
+      <section class="form-section">
+        <h2 id="form-title">Agregar Nueva Cita</h2>
+        <form id="cita-form">
+          <input type="hidden" id="cita-id">
+          
+          <div class="form-group">
+            <label for="cliente-opcion">Cliente:</label>
+            <select id="cliente-opcion">
+              <option value="existente">Seleccionar cliente existente</option>
+              <option value="nuevo">Agregar cliente nuevo</option>
+            </select>
+          </div>
+          
+          <div id="cliente-existente" class="form-group">
+            <label for="cliente">Cliente existente:</label>
+            <select id="cliente">
+              <option value="">Seleccione un cliente</option>
+            </select>
+          </div>
+          
+          <div id="cliente-nuevo" class="form-group hidden">
+            <label>Nuevo cliente:</label>
+            <input type="text" id="nuevo-nombre" placeholder="Nombres">
+            <input type="text" id="nuevo-apellido" placeholder="Apellidos">
+            <input type="text" id="nuevo-celular" placeholder="Celular">
+            <input type="email" id="nuevo-correo" placeholder="Correo electrónico">
+          </div>
+
+          <div class="form-group">
+            <label for="estilista">Estilista:</label>
+            <select id="estilista" required>
+              <option value="">Seleccione un estilista</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="fecha-cita">Fecha de la Cita:</label>
+            <input type="date" id="fecha-cita" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="hora-cita">Hora de la Cita:</label>
+            <input type="time" id="hora-cita" required>
+          </div>
+
+
+          
+          <div class="form-buttons">
+            <button type="submit" id="save-btn">Guardar</button>
+            <button type="button" id="cancel-btn" class="hidden">Cancelar</button>
+          </div>
+        </form>
+      </section>
+      
+      <section class="list-section">
+        <h2>Lista de Citas</h2>
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Buscar cita...">
+        </div>
+        <div class="table-container">
+          <table id="citas-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Estilista</th>  
+                <th>Fecha y Hora</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="citas-list">
+            </tbody>
+          </table>
+          <p id="no-citas-message" class="hidden">No hay citas registradas.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <div id="delete-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Confirmar Eliminación</h3>
+      <p>¿Estás seguro de que deseas eliminar esta cita?</p>
+      <div class="modal-buttons">
+        <button id="confirm-delete">Eliminar</button>
+        <button id="cancel-delete">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="citascript.js"></script>
+</body>
+</html>
