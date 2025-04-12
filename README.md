@@ -6,10 +6,10 @@
 
 ## Autores
 
-Carlos Andres Gomez Orduz
-Julián David Pérez Uribe
-Anderson Jahir Lemus Ramírez
-Juan Camilo Jaimes Avila
+* Carlos Andres Gomez Orduz
+* Julián David Pérez Uribe
+* Anderson Jahir Lemus Ramírez
+* Juan Camilo Jaimes Avila
 
 ## Objetivo
 Generar un aplicativo web que permita gestionar las citas entre estilistas y clientes, y que también exista un rol de administrador que permita gestionar su sala de belleza
